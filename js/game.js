@@ -14,7 +14,7 @@ const CONFIG = {
 		START_Y: 480 / 2 - 38,
 		IMAGES: ['assets/players/Player.png', 'assets/players/Player_Actions.png'],
 	},
-	MAPS: ['assets/maps/village_style_game.jpg', 'assets/maps/ForestMap.png', 'assets/maps/JewerlyMap.png', 'assets/maps/StoneMap.png'],
+	MAPS: ['assets/maps/village_style_game.jpg', 'assets/maps/ForestMap.png', 'assets/maps/JewerlyMap.png', 'assets/maps/StoneMap.png','assets/maps/GameOver.webp' ],
 	ICONS: ['assets/items/wood.png', 'assets/items/rock.png', 'assets/items/diamond.png'],
 	BG_SONG: 'assets/funny-bgm.mp3',
 }

@@ -110,7 +110,7 @@ class Boundary {
 	static height = 16
 	constructor({ position, action = undefined, width = 16, height = 16 }) {
 		this.position = position
-		this.action = action // действие
+		this.action = action
 		this.width = width
 		this.height = height
 	}
@@ -119,47 +119,35 @@ class Boundary {
 		player.action = undefined
 		if (px < this.position.x + this.width - 12 && px + pw > this.position.x + 12 && py < this.position.y + this.height - 18 && py + ph > this.position.y + 9) {
 			if (this.action == 1) return true
-			console.log(this.action);
-			
 			background.image.src = CONFIG.MAPS[this.action - 2] ? CONFIG.MAPS[this.action - 2] : background.image.src
-			console.log("this.action:", this.action);
-
-switch (this.action) {
-	case 2:
-		console.log("case 2");
-		player.position.set(CONFIG.PLAYER.START_X, CONFIG.PLAYER.START_Y);
-		boundaries = col(collisions);
-		break;
-	case 3:
-		console.log("case 3");
-		player.position.set(220, 200);
-		boundaries = col(colissionsTree);
-		break;
-	case 4:
-		console.log("case 4");
-		player.position.set(304, 242);
-		boundaries = col(collisionsJewerly);
-		break;
-	case 5:
-		console.log("case 5");
-		player.position.set(100, 150);
-		boundaries = col(collisionsStones);
-		break;
-	case 6: 
-		console.log("case 6");
-		player.position.set(300, 300);
-		break;
-	default:
-		console.log("default case", this.action);
-		player.action = this.action;
-		return true;
-}
+			switch (this.action) {
+				case 2:
+					player.position.set(CONFIG.PLAYER.START_X, CONFIG.PLAYER.START_Y)
+					boundaries = col(collisions)
+					break
+				case 3:
+					player.position.set(220, 200)
+					boundaries = col(colissionsTree)
+					breakP
+				case 4:
+					player.position.set(304, 242)
+					boundaries = col(collisionsJewerly)
+					break
+				case 5:
+					player.position.set(100, 150)
+					boundaries = col(collisionsStones)
+					break
+				case 6:
+					player.position.set(100, 150)
+					// boundaries = col(collisionsGameOver)
+					break
+				default:
+					player.action = this.action
+					return true
+			}
 		}
 		return false
 	}
-
-
-
 
 	draw() {
 		ctx.fillStyle = 'rgba(255, 0, 0, 0.3)'
@@ -181,7 +169,7 @@ class Key {
 	constructor(key) {
 		this.key = key
 		this.pressed = false
-	}
+							}
 
 	keyDownHandler() {
 		this.pressed = true
@@ -345,81 +333,81 @@ class Animation {
 
 	constructor(path, delay, pic_width, pic_height, p_width, p_height) {
 		this.images = path.map(src => {
-            const img = new Image()
-            img.src = src
-            return img
-        })
+			const img = new Image()
+			img.src = src
+			return img
+		})
 
-        this.frame = 0
-        this.move = 0
-        this.timer = new Timer(delay)
-        this.position = new Vector2()
-        this.picWidth = pic_width
-        this.picHeight = pic_height
-        this.width = p_width
-        this.height = p_height
-        this.side = 1
-        this.action = undefined
-        this.collecting = false
-    }
+		this.frame = 0
+		this.move = 0
+		this.timer = new Timer(delay)
+		this.position = new Vector2()
+		this.picWidth = pic_width
+		this.picHeight = pic_height
+		this.width = p_width
+		this.height = p_height
+		this.side = undefined
+		this.action = undefined
+		this.collecting = false
+	}
 
-    _setSize(size, frameReset = 0) {
-        ;[this.images[0], this.images[1]] = [this.images[1], this.images[0]]
-        this.picWidth = size
-        this.picHeight = size
-        this.width = size
-        this.height = size
-        this.frame = frameReset
-    }
+	_setSize(size, frameReset = 0) {
+		;[this.images[0], this.images[1]] = [this.images[1], this.images[0]]
+		this.picWidth = size
+		this.picHeight = size
+		this.width = size
+		this.height = size
+		this.frame = frameReset
+	}
 
-    updateFrame() {
-        this.timer.doTick()
+	updateFrame() {
+		this.timer.doTick()
 
-        if (this.timer.tick()) {
-            if (this.action && keys.E.pressed) {
-                if (items.items[this.action - 7] !== '100') {
-                    items.items[this.action - 7] += 1
-                }
-                this.frame = this.frame === 0 ? this.picWidth : 0
-            } else {
-                this.frame = (this.frame + this.picWidth) % (this.picWidth * 6)
-            }
-            this.timer.reset()
-        }
-    }
+		if (this.timer.tick()) {
+			if (this.action && keys.E.pressed) {
+				if (items.items[this.action - 7] !== 100) {
+					items.items[this.action - 7] += 1
+				}
+				this.frame = this.frame === 0 ? this.picWidth : 0
+			} else {
+				this.frame = (this.frame + this.picWidth) % (this.picWidth * 6)
+			}
+			this.timer.reset()
+		}
+	}
 
-    endState() {
-        if (this.action) {
-            this._setSize(Animation.DEFAULT_SIZE)
-            this.move = (this.move / 3) * 2
-            this.position.set(this.position.x + 8, this.position.y + 8)
-            keys.E.keyUpHandler()
-            this.collecting = false
-        }
-    }
+	endState() {
+		if (this.action) {
+			this._setSize(Animation.DEFAULT_SIZE)
+			this.move = (this.move / 3) * 2
+			this.position.set(this.position.x + 8, this.position.y + 8)
+			keys.E.keyUpHandler()
+			this.collecting = false
+		}
+	}
 
-    changeState(x, ismove = false) {
-        if (!this.action || !keys.E.pressed) {
-            this.side = x
-            const moveValues = [96, 0, 64, 32]
-            this.move = moveValues[x] + (ismove ? 128 : 0)
-        }
-    }
+	changeState(x, ismove = false) {
+		if (!this.action || !keys.E.pressed) {
+			this.side = x
+			const moveValues = [96, 0, 64, 32]
+			this.move = moveValues[x] + (ismove ? 128 : 0)
+		}
+	}
 
 	collect() {
-        if (this.action && keys.E.pressed && !this.collecting) {
-            this._setSize(Animation.COLLECT_SIZE)
-            this.move = (this.move / 2) * 3
-            this.position.set(this.position.x - 8, this.position.y - 8)
-            this.collecting = true
-            const collectMoveValues = [144, 0, 96, 48]
-            this.move = collectMoveValues[this.side]
+		if (this.action && keys.E.pressed && !this.collecting) {
+			this._setSize(Animation.COLLECT_SIZE)
+			this.move = (this.move / 2) * 3
+			this.position.set(this.position.x - 8, this.position.y - 8)
+			this.collecting = true
+			const collectMoveValues = [144, 0, 96, 48]
+			this.move = collectMoveValues[this.side]
 
-            if (this.action === 7 && this.move < 192) {
-                this.move += 192
-            }
-        }
-    }
+			if (this.action === 7 && this.move < 192) {
+				this.move += 192
+			}
+		}
+	}
 
 	draw() {
 		ctx.drawImage(this.images[0], this.frame, this.move, this.picWidth, this.picHeight, this.position.x, this.position.y, this.width, this.height)
