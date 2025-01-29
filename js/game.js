@@ -14,7 +14,7 @@ const CONFIG = {
 		START_Y: 480 / 2 - 38,
 		IMAGES: ['assets/players/Player.png', 'assets/players/Player_Actions.png'],
 	},
-	MAPS: ['assets/maps/village_style_game.jpg', 'assets/maps/ForestMap.png', 'assets/maps/JewerlyMap.png', 'assets/maps/StoneMap.png', 'assets/maps/GameOver.webp'],
+	MAPS: ['assets/maps/village_style_game.jpg', 'assets/maps/ForestMap.png', 'assets/maps/JewerlyMap.png', 'assets/maps/StoneMap.png'],
 	ICONS: ['assets/items/wood.png', 'assets/items/rock.png', 'assets/items/diamond.png'],
 	BG_SONG: 'assets/funny-bgm.mp3',
 }
@@ -51,16 +51,12 @@ const col = collisions =>
 				new Boundary({
 					position: { x: col * Boundary.width, y: row * Boundary.height },
 					action: typeof symbol == 'object' ? symbol[0] : symbol,
-					width: typeof symbol == 'object' ? symbol[1] * 16 : 16,  
+					width: typeof symbol == 'object' ? symbol[1] * 16 : 16,
 					height: typeof symbol == 'object' ? symbol[2] * 16 : 16,
-						})
+				})
 			)
-		
-			
-			
 			boundaries.push(new Boundary({ position: { x: 0, y: 14 }, action: 1, width: 40 * 16, height: 0 }), new Boundary({ position: { x: 4, y: 0 }, action: 1, width: 0, height: 30 * 16 }), new Boundary({ position: { x: 0, y: 30 * 16 }, action: 1, width: 40 * 16, height: 0 }), new Boundary({ position: { x: 40 * 16 - 4, y: 0 }, action: 1, width: 0, height: 30 * 16 }))
-			// console.log(this.action);
-		} // для внешних границ
+		}
 		return boundaries
 	}, [])
 
@@ -69,7 +65,7 @@ let boundaries = col(collisions)
 
 // Функция для анимации
 const animate = () => {
-	ctx.clearRect(0, 0, CONFIG.STAGE.WIDTH, CONFIG.STAGE.HEIGHT)
+	ctx?.clearRect(0, 0, CONFIG.STAGE.WIDTH, CONFIG.STAGE.HEIGHT)
 	background.draw()
 	// отрисовка границ колизии не нужно
 	// boundaries.forEach(b => b.draw())
@@ -102,7 +98,7 @@ const keyDown = () => {
 	]
 
 	directions.forEach(({ key, axis, value, stateNum }) => {
-		if (key.pressed) {
+		if (key.pressed && dir[axis] !== value) {
 			dir[axis] += value
 			num = stateNum
 		}
@@ -114,7 +110,7 @@ const keyDown = () => {
 	if (dir.dx) movePlayer(dir.dx, 0)
 	if (dir.dy) movePlayer(0, dir.dy)
 
-	player.changeState(num, dir.dx || dir.dy)
+	player.changeState(num, Boolean(dir.dx || dir.dy))
 }
 
 const keyActions = {
@@ -143,13 +139,13 @@ const keyActions = {
 // События
 window.addEventListener('keydown', e => {
 	if (!e.repeat) {
-		keyActions[e.code]?.keyDown?.() 
+		keyActions[e.code]?.keyDown?.(e)
 	}
 })
 
 window.addEventListener('keyup', e => {
 	if (!e.repeat) {
-		keyActions[e.code]?.keyUp?.()
+		keyActions[e.code]?.keyUp?.(e)
 	}
 })
 
