@@ -120,24 +120,34 @@ class Boundary {
 		if (px < this.position.x + this.width - 12 && px + pw > this.position.x + 12 && py < this.position.y + this.height - 18 && py + ph > this.position.y + 9) {
 			if (this.action == 1) return true
 			background.image.src = CONFIG.MAPS[this.action - 2] ? CONFIG.MAPS[this.action - 2] : background.image.src
+			console.log(this.action);
+			
 			switch (this.action) {
 				case 2:
+					console.log(2);
 					player.position.set(CONFIG.PLAYER.START_X, CONFIG.PLAYER.START_Y)
 					boundaries = col(collisions)
 					break
 				case 3:
+					console.log(3);
 					player.position.set(220, 200)
 					boundaries = col(colissionsTree)
-					breakP
+					break
 				case 4:
+					console.log(4);
+
 					player.position.set(304, 242)
 					boundaries = col(collisionsJewerly)
 					break
 				case 5:
+					console.log(5);
+
 					player.position.set(100, 150)
 					boundaries = col(collisionsStones)
 					break
 				case 6:
+					console.log(6);
+
 					player.position.set(100, 150)
 					// boundaries = col(collisionsGameOver)
 					break
@@ -404,6 +414,12 @@ class Animation {
 			this.move = collectMoveValues[this.side]
 
 			if (this.action === 7 && this.move < 192) {
+				this.move += 192
+			}
+			if (this.action === 8 && this.move < 192) {
+				this.move += 192
+			}
+			if (this.action === 9 && this.move < 192) {
 				this.move += 192
 			}
 		}
