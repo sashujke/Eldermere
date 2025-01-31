@@ -135,20 +135,17 @@ class Boundary {
 					break
 				case 4:
 					console.log(4);
-
 					player.position.set(304, 242)
 					boundaries = col(collisionsJewerly)
 					break
 				case 5:
 					console.log(5);
-
-					player.position.set(100, 150)
 					boundaries = col(collisionsStones)
 					break
 				case 6:
 					console.log(6);
-
 					player.position.set(100, 150)
+					boundaries = col(collisionsGameOver)
 					// boundaries = col(collisionsGameOver)
 					break
 				default:
