@@ -73,7 +73,7 @@ const animate = () => {
 	ctx?.clearRect(0, 0, CONFIG.STAGE.WIDTH, CONFIG.STAGE.HEIGHT) // Pulisce lo schermo
 	background.draw() // Disegna lo sfondo
 	// (Disegnare le collisioni non è necessario)
-	boundaries.forEach(b => b.draw()) // Disegna le collisioni
+	// boundaries.forEach(b => b.draw()) // Disegna le collisioni
 	player.draw() // Disegna il giocatore
 	player.updateFrame() // Aggiorna l'animazione del giocatore
 	items.drawResources() // Disegna gli oggetti sullo schermo
