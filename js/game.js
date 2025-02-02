@@ -82,7 +82,7 @@ const animate = () => {
 		menu.update()
 	}
 	keyDown() // Gestisce i movimenti dei tasti
-	window.requestAnimationFrame(animate) // Richiama la funzione di animazione per il prossimo frame
+	 // Richiama la funzione di animazione per il prossimo frame
 }
 
 //  (Funzione per il movimento del giocatore)
@@ -156,4 +156,6 @@ window.addEventListener('keyup', e => {
 
 // (Inizializzazione)
 init(CONFIG.STAGE.ID, CONFIG.STAGE.WIDTH, CONFIG.STAGE.HEIGHT) // Inizializza il gioco con la configurazione
-animate() // Avvia l'animazione del gioco
+setInterval(() => {
+	animate() // Avvia l'animazione del gioco
+}, 13);
