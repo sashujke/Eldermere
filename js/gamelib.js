@@ -119,8 +119,13 @@ class Boundary {
 		player.action = undefined
 		if (px < this.position.x + this.width - 12 && px + pw > this.position.x + 12 && py < this.position.y + this.height - 18 && py + ph > this.position.y + 9) {
 			if (this.action == 1) return true
+			if (items.items[0] == 100 && items.items[1] == 100 && items.items[2] == 100 && this.action == 2 || this.action == -2) {
+				this.action += 4;
+				console.log(1);
+			}
 			background.image.src = CONFIG.MAPS[this.action - 2] ? CONFIG.MAPS[this.action - 2] : background.image.src
-			console.log(this.action);
+			
+		console.log(this.action);
 			
 			switch (this.action) {
 				case 2:
@@ -145,7 +150,7 @@ class Boundary {
 					break
 				case 6:
 					console.log(6);
-					boundaries = col(collisionsJewerly)
+					boundaries = col(collisionsGameOver)
 					player.position.set(300, 280)
 					// boundaries = col(collisionsGameOver)
 					// boundaries = col(collisionsGameOver)
@@ -386,7 +391,7 @@ class Animation {
 	}
 
 	endState() {
-		if (this.action) {
+		if (this.action && !keys.E.pressed && this.collecting) { 
 			this._setSize(Animation.DEFAULT_SIZE)
 			this.move = (this.move / 3) * 2
 			this.position.set(this.position.x + 8, this.position.y + 8)
@@ -415,12 +420,7 @@ class Animation {
 			if (this.action === 7 && this.move < 192) {
 				this.move += 192
 			}
-			if (this.action === 8 && this.move < 192) {
-				this.move += 192
-			}
-			if (this.action === 9 && this.move < 192) {
-				this.move += 192
-			}
+			
 		}
 	}
 
